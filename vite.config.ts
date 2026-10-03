@@ -19,8 +19,15 @@ function photoUploadPlugin(): Plugin {
               if (json && json.imageBase64) {
                 const base64Data = json.imageBase64.replace(/^data:image\/[^;]+;base64,/, '');
                 const buffer = Buffer.from(base64Data, 'base64');
+                const publicPath = path.resolve(import.meta.dirname, 'public/profile.jpg');
+                const srcPath = path.resolve(import.meta.dirname, 'src/assets/images/profile.jpg');
                 const targetPath = path.resolve(import.meta.dirname, 'src/assets/images/aman_exact_portrait_1790980182818.jpg');
                 const backupPath = path.resolve(import.meta.dirname, 'src/assets/images/aman_uploaded_photo.jpg');
+                if (!fs.existsSync(path.resolve(import.meta.dirname, 'public'))) {
+                  fs.mkdirSync(path.resolve(import.meta.dirname, 'public'), { recursive: true });
+                }
+                fs.writeFileSync(publicPath, buffer);
+                fs.writeFileSync(srcPath, buffer);
                 fs.writeFileSync(targetPath, buffer);
                 fs.writeFileSync(backupPath, buffer);
                 res.writeHead(200, { 'Content-Type': 'application/json' });

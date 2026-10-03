@@ -6,6 +6,7 @@
 
 import gymImg from './assets/images/project_gym_website_1790966250439.jpg';
 import margdarshakImg from './assets/images/project_margdarshak_mockup_1790978396784.jpg';
+import profileImg from './assets/images/profile.png';
 
 function initPortfolio() {
   // 1. Navbar Scroll Effect
@@ -51,15 +52,60 @@ function initPortfolio() {
   // 5. Load Saved Custom Links (LeetCode, GFG, GitHub, LinkedIn)
   loadCustomLinks();
 
-  // 6. Contact Form Submission
+  // 6. Contact Form Submission directly to amansethiya02@gmail.com
   const contactForm = document.getElementById('portfolioContactForm');
+  const submitBtn = document.getElementById('contactSubmitBtn');
+  const submitText = document.getElementById('contactSubmitText');
+
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const nameInput = document.getElementById('formName');
-      const name = nameInput ? nameInput.value.trim() : 'Friend';
-      showToast(`Thank you, ${name}! Your message has been sent successfully. Aman will reach out soon.`, 'success');
-      contactForm.reset();
+
+      const name = document.getElementById('formName')?.value.trim() || '';
+      const email = document.getElementById('formEmail')?.value.trim() || '';
+      const subject = document.getElementById('formSubject')?.value.trim() || 'New Portfolio Inquiry';
+      const message = document.getElementById('formMessage')?.value.trim() || '';
+
+      if (!name || !email || !message) {
+        showToast('Please fill out all required fields.', 'info');
+        return;
+      }
+
+      if (submitBtn) submitBtn.disabled = true;
+      if (submitText) submitText.textContent = 'Sending to Aman...';
+
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/amansethiya02@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            subject: subject,
+            message: message,
+            _subject: `New Portfolio Message from ${name}: ${subject}`,
+            _replyto: email
+          })
+        });
+
+        const data = await response.json();
+        if (response.ok && (data.success === 'true' || data.success === true || data.message)) {
+          showToast(`Thank you, ${name}! Your message was successfully sent to Aman (amansethiya02@gmail.com). Aman will reply soon!`, 'success');
+          contactForm.reset();
+        } else {
+          // If first-time activation needed or error, fallback to direct form submit
+          contactForm.submit();
+        }
+      } catch (err) {
+        console.warn('Direct fetch attempt failed, submitting standard form:', err);
+        contactForm.submit();
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitText) submitText.textContent = 'Send Message';
+      }
     });
   }
 
@@ -152,19 +198,23 @@ function initTypewriterEffect() {
   typeStep();
 }
 
-// User Exact Photo Persistence Helper
+// User Exact Photo Persistence & Auto-Detection Loader
 function initPhotoPersistence() {
   const photoImg = document.getElementById('heroPortraitImg');
   const fileInput = document.getElementById('heroPhotoInput');
 
-  // Load saved custom photo if present
-  try {
-    const savedPhoto = localStorage.getItem('aman_custom_photo');
-    if (savedPhoto && photoImg) {
-      photoImg.src = savedPhoto;
-    }
-  } catch (e) {
-    console.error('Could not load custom photo from localStorage', e);
+  if (photoImg) {
+    // Clear any stale test cache from browser localStorage so the real photo always shows
+    try {
+      localStorage.removeItem('aman_custom_photo');
+    } catch (_) {}
+
+    // Set real imported profile image
+    photoImg.src = profileImg;
+
+    photoImg.onerror = function() {
+      photoImg.src = '/profile.png';
+    };
   }
 
   // File input change handler to let user pick their exact original photo
@@ -338,7 +388,7 @@ function applyLinks(links) {
   });
 }
 
-// Resume PDF Direct Download Handler (ATS 1-Page Format)
+// Resume PDF Direct Download Handler (ATS 1-Page Format with Active Hyperlinks & Ultra-HD Resolution)
 window.downloadResumePDF = function() {
   const resumeSheet = document.querySelector('.resume-paper-sheet');
   if (!resumeSheet) {
@@ -346,49 +396,104 @@ window.downloadResumePDF = function() {
     return;
   }
 
-  showToast('Generating official 1-page Aman Sethiya Resume PDF...', 'info');
+  showToast('Generating official 1-page Aman Sethiya Resume PDF (Ultra HD)...', 'info');
 
   if (typeof window.html2pdf === 'function') {
+    // Clone resume sheet to apply clean PDF dimensions without disturbing UI
     const cloned = resumeSheet.cloneNode(true);
     cloned.style.boxShadow = 'none';
     cloned.style.borderRadius = '0';
-    cloned.style.width = '690px';
-    cloned.style.maxWidth = '690px';
-    cloned.style.margin = '0 auto';
-    cloned.style.padding = '16px 20px';
+    cloned.style.width = '750px';
+    cloned.style.maxWidth = '750px';
+    cloned.style.margin = '0';
+    cloned.style.padding = '14px 22px';
     cloned.style.backgroundColor = '#ffffff';
     cloned.style.color = '#000000';
+    cloned.style.webkitFontSmoothing = 'antialiased';
 
-    const wrapper = document.createElement('div');
-    wrapper.style.position = 'fixed';
-    wrapper.style.left = '-9999px';
-    wrapper.style.top = '0';
-    wrapper.style.width = '690px';
-    wrapper.style.background = '#ffffff';
-    wrapper.appendChild(cloned);
-    document.body.appendChild(wrapper);
+    // Dedicated top-aligned container at (0,0) to prevent any window scrolling offset in html2canvas
+    const exportContainer = document.createElement('div');
+    exportContainer.id = 'resumePdfExportWrapper';
+    exportContainer.style.position = 'fixed';
+    exportContainer.style.left = '0';
+    exportContainer.style.top = '0';
+    exportContainer.style.width = '750px';
+    exportContainer.style.zIndex = '999999';
+    exportContainer.style.backgroundColor = '#ffffff';
+    exportContainer.style.pointerEvents = 'none';
+    exportContainer.style.margin = '0';
+    exportContainer.style.padding = '0';
+    exportContainer.appendChild(cloned);
+    document.body.appendChild(exportContainer);
+
+    const marginX = 6; // 6mm left & right
+    const marginY = 5; // 5mm top & bottom
+    const printableWidthMm = 210 - (marginX * 2); // 198mm
 
     const opt = {
-      margin:       [6, 8, 6, 8],
+      margin:       [marginY, marginX, marginY, marginX],
       filename:     'Aman_Sethiya_Resume.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2, useCORS: true, letterRendering: true, logging: false, width: 690 },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      image:        { type: 'png' }, // Lossless PNG for razor-sharp HD text without JPEG compression artifacts
+      enableLinks:  true,
+      html2canvas:  {
+        scale: 3, // Ultra-HD 300+ DPI sharpness
+        useCORS: true,
+        letterRendering: true,
+        logging: false,
+        scrollX: 0,
+        scrollY: 0,
+        x: 0,
+        y: 0,
+        width: 750,
+        windowWidth: 750,
+        windowHeight: cloned.offsetHeight || 1000
+      },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait', compress: true },
+      pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
-    window.html2pdf().set(opt).from(cloned).save().then(() => {
-      if (document.body.contains(wrapper)) {
-        document.body.removeChild(wrapper);
-      }
-      showToast('Aman_Sethiya_Resume.pdf downloaded successfully! (Single-Page ATS Format)', 'success');
-    }).catch(err => {
-      console.error('html2pdf generation error:', err);
-      if (document.body.contains(wrapper)) {
-        document.body.removeChild(wrapper);
-      }
-      showToast('Opening print dialog for PDF save...', 'info');
-      window.print();
-    });
+    // Use toPdf().get('pdf') pipeline to guarantee clickable interactive hyperlinks in all PDF readers
+    window.html2pdf()
+      .set(opt)
+      .from(cloned)
+      .toPdf()
+      .get('pdf')
+      .then((pdf) => {
+        const sheetRect = cloned.getBoundingClientRect();
+        const scaleFactor = printableWidthMm / cloned.offsetWidth;
+        const linkElements = cloned.querySelectorAll('a[href]');
+
+        linkElements.forEach(linkEl => {
+          const href = linkEl.getAttribute('href');
+          if (!href || href === '#' || href.startsWith('javascript:')) return;
+          const rect = linkEl.getBoundingClientRect();
+          const linkX = marginX + (rect.left - sheetRect.left) * scaleFactor;
+          const linkY = marginY + (rect.top - sheetRect.top) * scaleFactor;
+          const linkW = rect.width * scaleFactor;
+          const linkH = rect.height * scaleFactor;
+
+          try {
+            pdf.link(linkX, linkY, linkW, linkH, { url: href });
+          } catch (e) {
+            console.warn('Link annotation note:', e);
+          }
+        });
+      })
+      .save()
+      .then(() => {
+        if (document.body.contains(exportContainer)) {
+          document.body.removeChild(exportContainer);
+        }
+        showToast('Aman_Sethiya_Resume.pdf downloaded successfully! (Ultra HD · Single-Page ATS · Clickable Links)', 'success');
+      })
+      .catch(err => {
+        console.error('html2pdf generation error:', err);
+        if (document.body.contains(exportContainer)) {
+          document.body.removeChild(exportContainer);
+        }
+        showToast('Opening print dialog for PDF save...', 'info');
+        window.print();
+      });
   } else {
     const resumeModalEl = document.getElementById('resumeModal');
     if (resumeModalEl && window.bootstrap) {

@@ -213,7 +213,7 @@
               <div class="portrait-borderless-wrapper">
                 <img 
                   id="heroPortraitImg"
-                  src="/src/assets/images/aman_exact_portrait_1790980182818.jpg" 
+                  src="/src/assets/images/profile.png" 
                   alt="Aman Sethiya - 3rd Year CSE Student at JECRC" 
                   class="portrait-clean-img" 
                   referrerPolicy="no-referrer"
@@ -907,30 +907,34 @@
           <div class="col-lg-7">
             <div class="contact-card-dark">
               <h4 class="fw-bold mb-2 text-white">Send Aman a Message</h4>
-              <p class="text-muted small mb-4">Have an inquiry, project, or internship discussion? Drop a line here.</p>
+              <p class="text-white small mb-4" style="color: #FFFFFF !important; font-size: 0.95rem; font-weight: 400;">Have an inquiry, project, or internship discussion? Drop a line here.</p>
 
-              <form id="portfolioContactForm">
+              <form id="portfolioContactForm" action="https://formsubmit.co/amansethiya02@gmail.com" method="POST">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_subject" value="New Portfolio Message for Aman Sethiya!">
+
                 <div class="row g-3">
                   <div class="col-md-6">
-                    <label for="formName" class="form-label small fw-semibold text-muted">Your Name</label>
-                    <input type="text" class="form-control input-dark" id="formName" placeholder="e.g. John Doe" required>
+                    <label for="formName" class="form-label small fw-semibold text-white" style="color: #E2E8F0 !important;">Your Name</label>
+                    <input type="text" class="form-control input-dark" id="formName" name="name" placeholder="e.g. John Doe" required>
                   </div>
                   <div class="col-md-6">
-                    <label for="formEmail" class="form-label small fw-semibold text-muted">Your Email</label>
-                    <input type="email" class="form-control input-dark" id="formEmail" placeholder="e.g. john@example.com" required>
+                    <label for="formEmail" class="form-label small fw-semibold text-white" style="color: #E2E8F0 !important;">Your Email</label>
+                    <input type="email" class="form-control input-dark" id="formEmail" name="email" placeholder="e.g. john@example.com" required>
                   </div>
                   <div class="col-12">
-                    <label for="formSubject" class="form-label small fw-semibold text-muted">Subject / Opportunity</label>
-                    <input type="text" class="form-control input-dark" id="formSubject" placeholder="e.g. C++ Internship / Web Development Project" required>
+                    <label for="formSubject" class="form-label small fw-semibold text-white" style="color: #E2E8F0 !important;">Subject / Opportunity</label>
+                    <input type="text" class="form-control input-dark" id="formSubject" name="subject" placeholder="e.g. C++ Internship / Web Development Project" required>
                   </div>
                   <div class="col-12">
-                    <label for="formMessage" class="form-label small fw-semibold text-muted">Your Message</label>
-                    <textarea class="form-control input-dark" id="formMessage" rows="4" placeholder="Hi Aman, I reviewed your portfolio and would like to discuss..." required></textarea>
+                    <label for="formMessage" class="form-label small fw-semibold text-white" style="color: #E2E8F0 !important;">Your Message</label>
+                    <textarea class="form-control input-dark" id="formMessage" name="message" rows="4" placeholder="Hi Aman, I reviewed your portfolio and would like to discuss..." required></textarea>
                   </div>
                   <div class="col-12 mt-4">
-                    <button type="submit" class="btn-cyan-glow w-100 justify-content-center">
+                    <button type="submit" id="contactSubmitBtn" class="btn-cyan-glow w-100 justify-content-center">
                       <i class="bi bi-send-fill"></i>
-                      <span>Send Message</span>
+                      <span id="contactSubmitText">Send Message</span>
                     </button>
                   </div>
                 </div>
@@ -1069,7 +1073,7 @@
 
           <div class="modal-body p-3 p-md-4" style="background-color: #0b1320;">
             
-            <!-- Authentic White Paper Resume Container (Matching exact layout from user's PDF screenshot) -->
+            <!-- Authentic White Paper Resume Container (Single-Page ATS Format) -->
             <div class="resume-paper-sheet mx-auto">
               
               <!-- Header: Centered Name, Role & Contact Bar -->
@@ -1085,8 +1089,8 @@
 
               <!-- 1. CAREER OBJECTIVE -->
               <div class="resume-pdf-heading">CAREER OBJECTIVE</div>
-              <p class="resume-entry-sub mb-2" style="line-height: 1.42; text-align: justify;">
-                Dedicated Computer Science undergraduate (pre-final year student) with strong foundations in Data Structures & Algorithms (DSA), C++, and full-stack web engineering. Experienced in designing graph routing engines, algorithmic problem-solving, and building high-performance web applications. Completed certified industrial internships in DSA with C++ at EUONUS IT and Web Application Development at VGT Software. Seeking a Software Development Engineer (SDE) position to build scalable systems and solve challenging computational problems.
+              <p class="resume-entry-sub mb-2" style="text-align: justify;">
+                Pre-final year Computer Science undergraduate at JECRC Jaipur with strong foundations in C++, Data Structures & Algorithms (DSA), and full-stack web engineering. Experienced in graph routing algorithms, algorithmic optimization, and developing scalable web applications. Completed certified industrial trainings at EUONUS IT and VGT Software. Seeking a Software Development Engineer (SDE) role.
               </p>
 
               <!-- 2. EDUCATION -->
@@ -1094,11 +1098,11 @@
               
               <div class="mb-2">
                 <div class="resume-entry-header">
-                  <span>Bachelor of Technology in Computer Science & Engineering | Jaipur Engineering College And Research Centre, Jaipur</span>
+                  <span>Bachelor of Technology in Computer Science & Engineering | JECRC, Jaipur</span>
                   <span>2025 – 2028</span>
                 </div>
-                <div class="resume-entry-header fw-normal" style="font-size: 0.835rem; color: #222222;">
-                  <span>CGPA: 8.65/10 (Till Now)</span>
+                <div class="resume-entry-sub d-flex justify-content-between">
+                  <span>CGPA: 8.65 / 10 (Current)</span>
                   <span>Jaipur, Raj</span>
                 </div>
               </div>
@@ -1108,8 +1112,8 @@
                   <span>Diploma in Computer Science & Engineering | Government Polytechnic College, Jhalawar</span>
                   <span>2023 – 2025</span>
                 </div>
-                <div class="resume-entry-header fw-normal" style="font-size: 0.835rem; color: #222222;">
-                  <span>CGPA: 8.70/10</span>
+                <div class="resume-entry-sub d-flex justify-content-between">
+                  <span>CGPA: 8.70 / 10</span>
                   <span>Jhalawar, Raj</span>
                 </div>
               </div>
@@ -1119,7 +1123,7 @@
                   <span>Secondary (X), RBSE | Tegor Shishu Bharti Sec. School, Ramganjmandi</span>
                   <span>2021</span>
                 </div>
-                <div class="resume-entry-header fw-normal" style="font-size: 0.835rem; color: #222222;">
+                <div class="resume-entry-sub d-flex justify-content-between">
                   <span>Percentage: 86.00%</span>
                   <span>Ramganjmandi, Raj</span>
                 </div>
@@ -1128,18 +1132,18 @@
               <!-- 3. TECHNICAL SKILLS -->
               <div class="resume-pdf-heading">TECHNICAL SKILLS</div>
               <div class="resume-skills-grid mb-2">
-                <div class="resume-skills-label">Programming Languages:</div>
-                <div>C, C++, Python, SQL</div>
+                <div class="resume-skills-label">Languages:</div>
+                <div>C, C++, Python, SQL, JavaScript</div>
                 
-                <div class="resume-skills-label">Web Development:</div>
-                <div>React, HTML5, CSS3, JavaScript, Bootstrap 5, Django, Node.js</div>
+                <div class="resume-skills-label">Web Technologies:</div>
+                <div>React, HTML5, CSS3, Bootstrap 5, Django, Node.js</div>
                 
-                <div class="resume-skills-label">Core Concepts:</div>
+                <div class="resume-skills-label">Core Fundamentals:</div>
                 <div>Data Structures & Algorithms (DSA), Object-Oriented Programming (OOPs), Graph Algorithms</div>
                 
-                <div class="resume-skills-label">Tools & Technologies:</div>
+                <div class="resume-skills-label">Developer Tools:</div>
                 <div>Git, GitHub, VS Code</div>
-                
+
                 <div class="resume-skills-label">Coding & Problem Solving:</div>
                 <div><a href="https://leetcode.com/u/aman_sethiya/" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-leetcode">LeetCode</a>, <a href="https://www.geeksforgeeks.org/profile/amansethil4j4" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-gfg">GeeksforGeeks</a>, Graph Traversal (Dijkstra, TSP)</div>
               </div>
@@ -1150,14 +1154,12 @@
               <div class="mb-2">
                 <div class="resume-entry-header">
                   <span>DSA with C++ (Summer Internship) | EUONUS IT PRIVATE LIMITED</span>
-                  <span>15 May 2026 – 30 Jun 2026</span>
+                  <span>May 2026 – Jun 2026</span>
                 </div>
-                <div class="fw-normal mb-1" style="font-size: 0.835rem; color: #333333;">Jaipur, Rajasthan</div>
+                <div class="resume-entry-sub" style="color: #444444;">Jaipur, Rajasthan</div>
                 <ul class="resume-pdf-list">
-                  <li>Completed a verified industrial internship focused on Data Structures & Algorithms and Object-Oriented Programming (OOPs) using C++.</li>
-                  <li>Implemented core data structures including Linked Lists, Stacks, Queues, Binary Trees, and Hash Maps with optimal time-space complexities.</li>
-                  <li>Analyzed and solved complex algorithmic problems with thorough time-space asymptotic complexity evaluation.</li>
-                  <li>Verified and certified on 1st July 2026 (CIN: U62090RJ2023PTC091800).</li>
+                  <li>Implemented essential data structures (Linked Lists, Stacks, Queues, Binary Trees, Hash Maps) and graph algorithms in C++ with optimal time-space complexity.</li>
+                  <li>Solved challenging algorithmic problem sets focusing on OOPs modular design principles and asymptotic efficiency analysis.</li>
                 </ul>
               </div>
 
@@ -1166,12 +1168,10 @@
                   <span>Web Application Development | VGT Software Pvt. Ltd.</span>
                   <span>Jul 2024 – Aug 2024</span>
                 </div>
-                <div class="fw-normal mb-1" style="font-size: 0.835rem; color: #333333;">Kota, Rajasthan</div>
+                <div class="resume-entry-sub" style="color: #444444;">Kota, Rajasthan</div>
                 <ul class="resume-pdf-list">
-                  <li>Completed hands-on summer training program in Web Application Development with practical project implementation.</li>
-                  <li>Developed multiple real-world mini web projects implementing responsive UI design and interactive components.</li>
-                  <li>Designed and built the featured Gym & Fitness Management Website during this training period.</li>
-                  <li>Created modern, responsive user interfaces using HTML5, CSS3, JavaScript, and Bootstrap 5 with Django backend workflows.</li>
+                  <li>Engineered responsive web applications and interactive components using HTML5, CSS3, JavaScript, and Bootstrap 5 with Django backend workflows.</li>
+                  <li>Designed and delivered the featured Gym & Fitness Management platform with member inquiry scheduling and responsive layouts.</li>
                 </ul>
               </div>
 
@@ -1179,13 +1179,8 @@
               <div class="resume-pdf-heading">KEY PROJECTS</div>
               
               <div class="mb-2">
-                <div class="mb-1" style="font-size: 0.86rem;">
-                  <strong style="color: #000000;">MargDarshak — Intelligent Urban Graph & Fleet Route Optimizer</strong> 
-                  (<a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-github">GitHub</a>) 
-                  (<a href="https://marg-darshk.vercel.app/" target="_blank" rel="noopener noreferrer" class="resume-paper-link">Live Demo</a>)
-                </div>
-                <div class="resume-tech-line">
-                  Tech Stack: C++ / TypeScript, React, Leaflet, Data Structures & Graph Algorithms
+                <div class="resume-entry-header mb-1">
+                  <span><strong>MargDarshak — Intelligent Urban Graph & Fleet Route Optimizer</strong> (<a href="https://marg-darshk.vercel.app/" target="_blank" rel="noopener noreferrer" class="resume-paper-link">Live Platform</a> | <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-github">GitHub</a>)</span>
                 </div>
                 <ul class="resume-pdf-list">
                   <li>Engineered an in-memory graph routing engine modeling Jaipur’s intra-city transit network across 14 strategic nodes and 44 bidirectional road corridors.</li>
@@ -1196,24 +1191,20 @@
               </div>
 
               <div class="mb-2">
-                <div class="mb-1" style="font-size: 0.86rem;">
-                  <strong style="color: #000000;">Gym & Fitness Management Website</strong>
-                </div>
-                <div class="resume-tech-line">
-                  Tech Stack: HTML5, CSS3, JavaScript, Bootstrap 5, Django
+                <div class="resume-entry-header mb-1">
+                  <span><strong>Gym & Fitness Management Website</strong> (VGT Software Training Project)</span>
                 </div>
                 <ul class="resume-pdf-list">
-                  <li>Built a comprehensive fitness club web platform featuring categorized gym workout packages and tiered membership options.</li>
-                  <li>Designed dynamic trainer schedules, class timetables, and an integrated member inquiry registration interface.</li>
-                  <li>Implemented fully responsive UI layouts optimized for mobile, tablet, and high-resolution desktop viewports.</li>
+                  <li>Built a comprehensive fitness club web platform featuring categorized gym workout packages, trainer profiles, and class timetables.</li>
+                  <li>Designed an integrated member inquiry registration interface with backend handling in Django and modern Bootstrap 5 styling.</li>
                 </ul>
               </div>
 
-              <!-- 6. ACHIEVEMENTS & CERTIFICATIONS (Concise 2 key points) -->
+              <!-- 6. ACHIEVEMENTS & CERTIFICATIONS -->
               <div class="resume-pdf-heading">ACHIEVEMENTS & CERTIFICATIONS</div>
-              <ul class="resume-pdf-list">
-                <li>Solved 250+ Data Structures and Algorithms (DSA) problems across LeetCode & GeeksforGeeks, strengthening algorithmic thinking and time complexity optimization.</li>
-                <li>Active problem solver on GeeksforGeeks practicing C++ STL, OOPs design principles, and graph optimization algorithms.</li>
+              <ul class="resume-pdf-list mb-0">
+                <li>Solved 250+ Data Structures and Algorithms (DSA) problems across LeetCode & GeeksforGeeks, demonstrating algorithmic problem solving.</li>
+                <li>Completed certified industrial trainings in DSA with C++ (EUONUS IT) and Web Application Development (VGT Software).</li>
               </ul>
 
             </div>
