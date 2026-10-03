@@ -356,6 +356,39 @@ h1, h2, h3, h4, h5, h6 {
   transform: scale(1.02);
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.photo-upload-container {
+  position: relative;
+  z-index: 5;
+  margin-top: 1.25rem;
+}
+
+.btn-photo-upload {
+  background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(2, 132, 199, 0.35));
+  border: 1px solid var(--cyan-primary);
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.6rem 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 210, 255, 0.25);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-photo-upload:hover {
+  background: var(--cyan-primary);
+  color: #070E18;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 210, 255, 0.45);
+}
+
 .floating-hero-chip {
   position: absolute;
   z-index: 4;
@@ -755,7 +788,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ========================================================================= */
-/* AUTHENTIC ATS RESUME PAPER STYLING (Matching User's PDF Layout)           */
+/* AUTHENTIC ATS RESUME PAPER STYLING (Matching User's PDF Layout Exactly)   */
 /* ========================================================================= */
 .resume-modal-dialog {
   max-width: 860px;
@@ -763,53 +796,66 @@ h1, h2, h3, h4, h5, h6 {
 
 .resume-paper-sheet {
   background-color: #FFFFFF;
-  color: #111827;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  padding: 38px 46px;
-  border-radius: 6px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-  line-height: 1.5;
-  font-size: 0.88rem;
+  color: #111111;
+  font-family: 'Calibri', 'Carlito', 'Arial', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding: 24px 30px;
+  border-radius: 4px;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
+  line-height: 1.34;
+  font-size: 0.815rem;
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
 }
 
 .resume-paper-header-name {
-  font-size: 1.75rem;
-  font-weight: 800;
+  font-size: 1.45rem;
+  font-weight: 700;
   text-align: center;
   color: #000000;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.resume-paper-header-role {
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #111111;
+  text-transform: uppercase;
   margin-bottom: 4px;
 }
 
 .resume-paper-contact-bar {
   text-align: center;
-  font-size: 0.86rem;
-  color: #111827;
+  font-size: 0.80rem;
+  color: #111111;
   font-weight: 500;
-  margin-bottom: 16px;
+  margin-bottom: 9px;
 }
 
 .resume-paper-link {
-  color: #0369A1 !important;
+  color: #1d4ed8 !important;
   text-decoration: underline !important;
-  font-weight: 600;
-  transition: color 0.2s ease;
+  font-weight: 500;
+  transition: color 0.15s ease;
 }
 
 .resume-paper-link:hover {
-  color: #0284C7 !important;
+  color: #1e40af !important;
 }
 
 .resume-pdf-heading {
-  font-size: 0.92rem;
-  font-weight: 800;
+  font-size: 0.825rem;
+  font-weight: 700;
   text-transform: uppercase;
   color: #000000;
-  letter-spacing: 0.04em;
-  border-bottom: 1.5px solid #000000;
-  padding-bottom: 2px;
-  margin-top: 14px;
-  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+  border-bottom: 1.2px solid #000000;
+  padding-bottom: 1px;
+  margin-top: 7px;
+  margin-bottom: 3px;
 }
 
 .resume-entry-header {
@@ -818,25 +864,63 @@ h1, h2, h3, h4, h5, h6 {
   align-items: baseline;
   font-weight: 700;
   color: #000000;
-  font-size: 0.88rem;
+  font-size: 0.815rem;
+  line-height: 1.3;
 }
 
 .resume-entry-sub {
-  color: #1F2937;
-  font-size: 0.85rem;
-  margin-bottom: 4px;
+  color: #222222;
+  font-size: 0.80rem;
+  line-height: 1.36;
+  margin-bottom: 2px;
 }
 
 .resume-pdf-list {
-  padding-left: 18px;
-  margin-bottom: 10px;
-  color: #1F2937;
-  font-size: 0.85rem;
-  line-height: 1.55;
+  padding-left: 16px;
+  margin-bottom: 4px;
+  color: #111111;
+  font-size: 0.80rem;
+  line-height: 1.34;
+  list-style-type: disc;
 }
 
 .resume-pdf-list li {
-  margin-bottom: 3px;
+  margin-bottom: 1.5px;
+}
+
+.resume-skills-grid {
+  display: grid;
+  grid-template-columns: 175px 1fr;
+  row-gap: 2.5px;
+  column-gap: 10px;
+  font-size: 0.80rem;
+  line-height: 1.34;
+  color: #111111;
+}
+
+.resume-skills-label {
+  font-weight: 700;
+  color: #000000;
+}
+
+.resume-tech-line {
+  font-size: 0.80rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 2px;
+}
+
+.resume-project-highlight {
+  font-weight: 700;
+  color: #000000;
+  font-size: 0.825rem;
+}
+
+@media (max-width: 576px) {
+  .resume-skills-grid {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
 }
 
 @media print {

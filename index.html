@@ -24,6 +24,9 @@
     <!-- Font Awesome 6 (for Brand Icons: LeetCode, GitHub, LinkedIn, C++, etc.) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- html2pdf.js for 1-Click Client-Side PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <!-- Custom Dark Portfolio Stylesheet -->
     <link rel="stylesheet" href="/src/style.css">
   </head>
@@ -88,7 +91,7 @@
           </a>
 
           <!-- LinkedIn -->
-          <a href="https://www.linkedin.com/in/aman-sethiya02" target="_blank" rel="noopener noreferrer" class="nav-action-icon link-linkedin" title="LinkedIn Profile">
+          <a href="https://www.linkedin.com/in/aman-sethiya02/?isSelfProfile=true" target="_blank" rel="noopener noreferrer" class="nav-action-icon link-linkedin" title="LinkedIn Profile">
             <i class="fa-brands fa-linkedin-in"></i>
           </a>
 
@@ -133,7 +136,7 @@
               Currently pursuing my 3rd year in Computer Science & Engineering at <strong>JECRC (Jaipur Engineering College and Research Centre), Jaipur</strong>. Passionate about engineering high-performance web applications, mastering Object-Oriented Programming (OOPs), and solving algorithmic challenges in C++ and Data Structures.
             </p>
 
-            <!-- CTA Action Buttons (Hire Me & Let's Talk) -->
+            <!-- CTA Action Buttons (Hire Me, Let's Talk, View Resume & Direct Download) -->
             <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
               <a href="#contact" class="btn-cyan-glow">
                 <span>Hire Me</span>
@@ -146,8 +149,13 @@
               </a>
 
               <button type="button" class="btn-cyan-outline" data-bs-toggle="modal" data-bs-target="#resumeModal">
-                <i class="bi bi-download me-1"></i>
-                <span>Resume</span>
+                <i class="bi bi-file-earmark-person me-1"></i>
+                <span>View Resume</span>
+              </button>
+
+              <button type="button" class="btn-cyan-glow" onclick="downloadResumePDF()" title="Download Official Resume as PDF">
+                <i class="bi bi-file-earmark-arrow-down-fill me-1"></i>
+                <span>Download CV</span>
               </button>
             </div>
 
@@ -170,7 +178,7 @@
               </a>
 
               <!-- LinkedIn Profile -->
-              <a href="https://www.linkedin.com/in/aman-sethiya02" target="_blank" rel="noopener noreferrer" class="hero-social-pill link-linkedin" title="LinkedIn Profile">
+              <a href="https://www.linkedin.com/in/aman-sethiya02/?isSelfProfile=true" target="_blank" rel="noopener noreferrer" class="hero-social-pill link-linkedin" title="LinkedIn Profile">
                 <i class="fa-brands fa-linkedin-in text-info"></i>
               </a>
 
@@ -298,6 +306,43 @@
                 </div>
               </div>
 
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic Background (From User Education Profile - XII omitted per request) -->
+        <div class="row g-4 mt-4 pt-4 border-top" style="border-color: var(--border-subtle) !important;">
+          <div class="col-12">
+            <h4 class="text-white fw-bold mb-3 d-flex align-items-center gap-2">
+              <i class="bi bi-mortarboard-fill text-cyan"></i>
+              <span>Academic Education</span>
+            </h4>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="p-3 rounded-4 h-100" style="background: var(--bg-card); border: 1px solid var(--border-cyan);">
+              <span class="badge px-3 py-1 rounded-pill mb-2" style="background-color: rgba(0, 210, 255, 0.15); color: var(--cyan-primary); border: 1px solid var(--border-cyan);">2025 – 2028</span>
+              <h6 class="fw-bold text-white mb-1">Bachelor of Technology in CSE</h6>
+              <div class="text-cyan small mb-2">Jaipur Engineering College And Research Centre (JECRC), Jaipur</div>
+              <div class="text-white small fw-bold">CGPA: 8.65 / 10 <span class="text-muted fw-normal">(Till Now)</span></div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="p-3 rounded-4 h-100" style="background: var(--bg-card); border: 1px solid var(--border-subtle);">
+              <span class="badge px-3 py-1 rounded-pill mb-2 bg-dark border border-secondary text-light">2023 – 2025</span>
+              <h6 class="fw-bold text-white mb-1">Diploma in Computer Science & Engineering</h6>
+              <div class="text-cyan small mb-2">Government Polytechnic College, Jhalawar</div>
+              <div class="text-white small fw-bold">CGPA: 8.70 / 10</div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="p-3 rounded-4 h-100" style="background: var(--bg-card); border: 1px solid var(--border-subtle);">
+              <span class="badge px-3 py-1 rounded-pill mb-2 bg-dark border border-secondary text-light">2021</span>
+              <h6 class="fw-bold text-white mb-1">Secondary (X), RBSE</h6>
+              <div class="text-cyan small mb-2">Tegor Shishu Bharti Sec. School, Ramganjmandi</div>
+              <div class="text-white small fw-bold">Percentage: 86.00%</div>
             </div>
           </div>
         </div>
@@ -489,7 +534,7 @@
 
               <!-- Body -->
               <div class="project-card-body">
-                <h3 class="fw-bold mb-2 text-white">1. Gym & Fitness Management Website</h3>
+                <h3 class="fw-bold mb-2 project-title-highlight">1. Gym & Fitness Management Website</h3>
                 <p class="text-muted-custom mb-3" style="line-height: 1.65;">
                   A comprehensive, responsive fitness club website featuring categorized gym workout packages, trainer bios, class timetables, and an inquiry contact form with backend integration.
                 </p>
@@ -503,24 +548,19 @@
                   <span class="project-tech-tag">Django</span>
                 </div>
 
-                <!-- Action Buttons: Live Demo & GitHub Code -->
-                <div class="d-flex align-items-center gap-3 mt-auto pt-3 border-top" style="border-color: var(--border-subtle) !important;">
-                  <a href="#" class="btn-project-live flex-grow-1 justify-content-center" data-project-key="gym">
-                    <i class="bi bi-play-circle-fill"></i>
-                    <span>Live Demo</span>
-                  </a>
-                  <!-- EDIT LINK: Replace href="https://github.com/" with your Gym repo URL -->
-                  <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="btn-project-repo link-github" title="View Code on GitHub">
-                    <i class="fa-brands fa-github"></i>
-                    <span>GitHub Code</span>
-                  </a>
+                <!-- Project Meta (GitHub & Live Demo removed per user specification) -->
+                <div class="d-flex align-items-center justify-content-between mt-auto pt-3 border-top" style="border-color: var(--border-subtle) !important;">
+                  <span class="small text-muted">
+                    <i class="bi bi-briefcase-fill text-cyan me-1"></i> Industrial Training Project
+                  </span>
+                  <span class="badge bg-dark border border-secondary text-info">VGT Software Pvt. Ltd.</span>
                 </div>
 
               </div>
             </div>
           </div>
 
-          <!-- Project 2: Margdarshak (Live link: https://marg-darshk.vercel.app/) -->
+          <!-- Project 2: MargDarshak (Live link: https://marg-darshk.vercel.app/) -->
           <div class="col-lg-6">
             <div class="project-card-dark">
               
@@ -531,7 +571,7 @@
                 </span>
                 <img 
                   src="/src/assets/images/project_margdarshak_mockup_1790978396784.jpg" 
-                  alt="Margdarshak Platform Preview" 
+                  alt="MargDarshak Platform Preview" 
                   class="project-thumbnail-img" 
                   referrerPolicy="no-referrer"
                 />
@@ -539,31 +579,31 @@
 
               <!-- Body -->
               <div class="project-card-body">
-                <h3 class="fw-bold mb-2 text-white">2. Margdarshak</h3>
+                <h3 class="fw-bold mb-2 project-title-highlight">2. MargDarshak — Intelligent Urban Graph & Fleet Route Optimizer</h3>
                 <p class="text-muted-custom mb-3" style="line-height: 1.65;">
-                  An intelligent career & academic guidance platform empowering students with structured learning roadmaps, stream exploration, and mentorship resources with a sleek responsive interface.
+                  An in-memory graph routing and fleet optimization engine modeling Jaipur's intra-city transit network across 14 strategic nodes and 44 bidirectional road corridors. Features Dijkstra's Algorithm for real-time shortest route calculation, a Multi-Stop TSP solver cutting trip fuel by up to 35%, and dynamic disruption simulation.
                 </p>
 
                 <!-- Tech Tags -->
                 <div class="mb-4">
-                  <span class="project-tech-tag">Web Application</span>
-                  <span class="project-tech-tag">Modern UI</span>
-                  <span class="project-tech-tag">Career Roadmaps</span>
-                  <span class="project-tech-tag">Vercel Deployment</span>
+                  <span class="project-tech-tag">C++ / TypeScript</span>
+                  <span class="project-tech-tag">React</span>
+                  <span class="project-tech-tag">Leaflet</span>
+                  <span class="project-tech-tag">Graph Algorithms</span>
+                  <span class="project-tech-tag">Dijkstra</span>
+                  <span class="project-tech-tag">TSP Fleet Optimizer</span>
                 </div>
 
                 <!-- Action Buttons: Direct Live Demo link to https://marg-darshk.vercel.app/ -->
                 <div class="d-flex align-items-center gap-3 mt-auto pt-3 border-top" style="border-color: var(--border-subtle) !important;">
-                  <!-- Direct link to Margdarshak on Vercel -->
                   <a href="https://marg-darshk.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-project-live flex-grow-1 justify-content-center">
-                    <i class="bi bi-box-arrow-up-right"></i>
-                    <span>Live Demo</span>
+                    <i class="bi bi-box-arrow-up-right me-1"></i>
+                    <span>Live Platform</span>
                   </a>
-                  <!-- EDIT LINK: Replace href="https://github.com/" with your Margdarshak repo URL -->
-                  <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="btn-project-repo link-github" title="View Code on GitHub">
-                    <i class="fa-brands fa-github"></i>
-                    <span>GitHub Code</span>
-                  </a>
+                  <button type="button" class="btn-project-repo" data-project-key="margdarshak" title="View Full System Architecture">
+                    <i class="bi bi-info-circle-fill me-1"></i>
+                    <span>Architecture</span>
+                  </button>
                 </div>
 
               </div>
@@ -656,7 +696,7 @@
               <p class="text-muted small flex-grow-1 mb-3">
                 Professional network showcasing tech milestones, summer internships, university updates, and engineering collaborations.
               </p>
-              <a href="https://www.linkedin.com/in/aman-sethiya02" target="_blank" rel="noopener noreferrer" class="btn-profile-visit link-linkedin" style="background-color: #0A66C2; color: #FFFFFF; border: 1.5px solid #0A66C2;">
+              <a href="https://www.linkedin.com/in/aman-sethiya02/?isSelfProfile=true" target="_blank" rel="noopener noreferrer" class="btn-profile-visit link-linkedin" style="background-color: #0A66C2; color: #FFFFFF; border: 1.5px solid #0A66C2;">
                 <span>Connect on LinkedIn</span>
                 <i class="bi bi-box-arrow-up-right small"></i>
               </a>
@@ -678,7 +718,7 @@
           <span class="section-tag">Industrial & Technical Exposure</span>
           <h2 class="section-title">Internships & Trainings</h2>
           <p class="section-subtitle mx-auto">
-            Practical summer internships and specialized industrial training programs completed during B.Tech CSE at JECRC.
+            Practical summer internships and specialized industrial training programs.
           </p>
         </div>
 
@@ -849,7 +889,7 @@
                 <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="hero-social-pill link-github" title="GitHub">
                   <i class="fa-brands fa-github text-white"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/aman-sethiya02" target="_blank" rel="noopener noreferrer" class="hero-social-pill link-linkedin" title="LinkedIn">
+                <a href="https://www.linkedin.com/in/aman-sethiya02/?isSelfProfile=true" target="_blank" rel="noopener noreferrer" class="hero-social-pill link-linkedin" title="LinkedIn">
                   <i class="fa-brands fa-linkedin-in text-info"></i>
                 </a>
                 <a href="https://wa.me/918003896085" target="_blank" rel="noopener noreferrer" class="hero-social-pill" title="WhatsApp Message">
@@ -935,7 +975,7 @@
               <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="hero-social-pill link-github" title="GitHub">
                 <i class="fa-brands fa-github text-white"></i>
               </a>
-              <a href="https://www.linkedin.com/in/aman-sethiya02" target="_blank" rel="noopener noreferrer" class="hero-social-pill link-linkedin" title="LinkedIn">
+              <a href="https://www.linkedin.com/in/aman-sethiya02/?isSelfProfile=true" target="_blank" rel="noopener noreferrer" class="hero-social-pill link-linkedin" title="LinkedIn">
                 <i class="fa-brands fa-linkedin-in text-info"></i>
               </a>
             </div>
@@ -1017,8 +1057,11 @@
               </div>
             </div>
             <div class="d-flex align-items-center gap-2">
-              <button type="button" class="btn btn-sm btn-cyan-glow" onclick="window.print()" title="Print or save as PDF">
-                <i class="bi bi-printer me-1"></i> Print / Save PDF
+              <button type="button" class="btn btn-sm btn-cyan-glow" onclick="downloadResumePDF()" title="Download PDF file">
+                <i class="bi bi-file-earmark-arrow-down-fill me-1"></i> Download PDF
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-light" onclick="window.print()" title="Print or save via browser">
+                <i class="bi bi-printer me-1"></i> Print
               </button>
               <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -1026,43 +1069,90 @@
 
           <div class="modal-body p-3 p-md-4" style="background-color: #0b1320;">
             
-            <!-- Authentic White Paper Resume Container (Matching provided PDF exactly) -->
+            <!-- Authentic White Paper Resume Container (Matching exact layout from user's PDF screenshot) -->
             <div class="resume-paper-sheet mx-auto">
               
-              <!-- Header: Centered Name & Active Contact Hyperlinks -->
-              <div class="resume-paper-header-name">Aman Sethiya</div>
+              <!-- Header: Centered Name, Role & Contact Bar -->
+              <div class="resume-paper-header-name">AMAN SETHIYA</div>
+              <div class="resume-paper-header-role">SOFTWARE DEVELOPMENT ENGINEER</div>
               <div class="resume-paper-contact-bar">
-                +91-8003896085 | 
-                <a href="mailto:amansethiya02@gmail.com" class="resume-paper-link" title="Send Email">Email</a> | 
-                <a href="https://www.linkedin.com/in/aman-sethiya02" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-linkedin" title="LinkedIn Profile">LinkedIn</a> | 
-                <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-github" title="GitHub Profile">GitHub</a> | 
-                <a href="https://leetcode.com/u/aman_sethiya/" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-leetcode" title="LeetCode Profile">LeetCode</a>
+                +91-8003896085 &nbsp;|&nbsp; 
+                <a href="mailto:amansethiya02@gmail.com" class="resume-paper-link" title="Send Email">amansethiya02@gmail.com</a> &nbsp;|&nbsp; 
+                Jaipur, Rajasthan &nbsp;|&nbsp; 
+                <a href="https://www.linkedin.com/in/aman-sethiya02/?isSelfProfile=true" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-linkedin" title="LinkedIn Profile">LinkedIn <i class="bi bi-box-arrow-up-right" style="font-size: 0.68rem;"></i></a> &nbsp;|&nbsp; 
+                <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-github" title="GitHub Profile">GitHub <i class="bi bi-box-arrow-up-right" style="font-size: 0.68rem;"></i></a>
               </div>
 
-              <!-- 1. SUMMARY -->
-              <div class="resume-pdf-heading">SUMMARY</div>
-              <p class="resume-entry-sub mb-2" style="line-height: 1.55; text-align: justify;">
-                Third-year B.Tech student in Computer Science & Engineering with hands-on experience in web application development, Data Structures and Algorithms (DSA), and C++ programming. Completed certified summer internships in DSA with C++ at EUONUS IT Pvt. Ltd. and Web Application Development at VGT Software Pvt. Ltd. Experienced in building and deploying responsive web projects, with active problem-solving practice on LeetCode and GeeksforGeeks. Seeking a Software Development Internship to apply technical skills, develop scalable solutions, and contribute to real-world engineering projects.
+              <!-- 1. CAREER OBJECTIVE -->
+              <div class="resume-pdf-heading">CAREER OBJECTIVE</div>
+              <p class="resume-entry-sub mb-2" style="line-height: 1.42; text-align: justify;">
+                Dedicated Computer Science undergraduate (pre-final year student) with strong foundations in Data Structures & Algorithms (DSA), C++, and full-stack web engineering. Experienced in designing graph routing engines, algorithmic problem-solving, and building high-performance web applications. Completed certified industrial internships in DSA with C++ at EUONUS IT and Web Application Development at VGT Software. Seeking a Software Development Engineer (SDE) position to build scalable systems and solve challenging computational problems.
               </p>
 
               <!-- 2. EDUCATION -->
               <div class="resume-pdf-heading">EDUCATION</div>
-              <div class="resume-entry-header">
-                <span>B.Tech in Computer Science and Engineering</span>
-                <span>Sept. 2023 – May 2027</span>
-              </div>
-              <div class="resume-entry-sub mb-2">
-                Jaipur Engineering College And Research Centre (JECRC) | Jaipur
-              </div>
-
-              <!-- 3. INTERNSHIP & TRAINING EXPERIENCE -->
-              <div class="resume-pdf-heading">INTERNSHIP & TRAINING EXPERIENCE</div>
               
               <div class="mb-2">
                 <div class="resume-entry-header">
-                  <span>EUONUS IT PRIVATE LIMITED — Jaipur | Intern - DSA with C++ (Summer Internship)</span>
+                  <span>Bachelor of Technology in Computer Science & Engineering | Jaipur Engineering College And Research Centre, Jaipur</span>
+                  <span>2025 – 2028</span>
+                </div>
+                <div class="resume-entry-header fw-normal" style="font-size: 0.835rem; color: #222222;">
+                  <span>CGPA: 8.65/10 (Till Now)</span>
+                  <span>Jaipur, Raj</span>
+                </div>
+              </div>
+
+              <div class="mb-2">
+                <div class="resume-entry-header">
+                  <span>Diploma in Computer Science & Engineering | Government Polytechnic College, Jhalawar</span>
+                  <span>2023 – 2025</span>
+                </div>
+                <div class="resume-entry-header fw-normal" style="font-size: 0.835rem; color: #222222;">
+                  <span>CGPA: 8.70/10</span>
+                  <span>Jhalawar, Raj</span>
+                </div>
+              </div>
+
+              <div class="mb-2">
+                <div class="resume-entry-header">
+                  <span>Secondary (X), RBSE | Tegor Shishu Bharti Sec. School, Ramganjmandi</span>
+                  <span>2021</span>
+                </div>
+                <div class="resume-entry-header fw-normal" style="font-size: 0.835rem; color: #222222;">
+                  <span>Percentage: 86.00%</span>
+                  <span>Ramganjmandi, Raj</span>
+                </div>
+              </div>
+
+              <!-- 3. TECHNICAL SKILLS -->
+              <div class="resume-pdf-heading">TECHNICAL SKILLS</div>
+              <div class="resume-skills-grid mb-2">
+                <div class="resume-skills-label">Programming Languages:</div>
+                <div>C, C++, Python, SQL</div>
+                
+                <div class="resume-skills-label">Web Development:</div>
+                <div>React, HTML5, CSS3, JavaScript, Bootstrap 5, Django, Node.js</div>
+                
+                <div class="resume-skills-label">Core Concepts:</div>
+                <div>Data Structures & Algorithms (DSA), Object-Oriented Programming (OOPs), Graph Algorithms</div>
+                
+                <div class="resume-skills-label">Tools & Technologies:</div>
+                <div>Git, GitHub, VS Code</div>
+                
+                <div class="resume-skills-label">Coding & Problem Solving:</div>
+                <div><a href="https://leetcode.com/u/aman_sethiya/" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-leetcode">LeetCode</a>, <a href="https://www.geeksforgeeks.org/profile/amansethil4j4" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-gfg">GeeksforGeeks</a>, Graph Traversal (Dijkstra, TSP)</div>
+              </div>
+
+              <!-- 4. INTERNSHIPS & TRAININGS -->
+              <div class="resume-pdf-heading">INTERNSHIPS & TRAININGS</div>
+              
+              <div class="mb-2">
+                <div class="resume-entry-header">
+                  <span>DSA with C++ (Summer Internship) | EUONUS IT PRIVATE LIMITED</span>
                   <span>15 May 2026 – 30 Jun 2026</span>
                 </div>
+                <div class="fw-normal mb-1" style="font-size: 0.835rem; color: #333333;">Jaipur, Rajasthan</div>
                 <ul class="resume-pdf-list">
                   <li>Completed a verified industrial internship focused on Data Structures & Algorithms and Object-Oriented Programming (OOPs) using C++.</li>
                   <li>Implemented core data structures including Linked Lists, Stacks, Queues, Binary Trees, and Hash Maps with optimal time-space complexities.</li>
@@ -1073,9 +1163,10 @@
 
               <div class="mb-2">
                 <div class="resume-entry-header">
-                  <span>VGT Software Pvt. Ltd. — Kota, Rajasthan | Intern - Web Application Development</span>
+                  <span>Web Application Development | VGT Software Pvt. Ltd.</span>
                   <span>Jul 2024 – Aug 2024</span>
                 </div>
+                <div class="fw-normal mb-1" style="font-size: 0.835rem; color: #333333;">Kota, Rajasthan</div>
                 <ul class="resume-pdf-list">
                   <li>Completed hands-on summer training program in Web Application Development with practical project implementation.</li>
                   <li>Developed multiple real-world mini web projects implementing responsive UI design and interactive components.</li>
@@ -1084,56 +1175,45 @@
                 </ul>
               </div>
 
-              <!-- 4. TECHNICAL SKILLS -->
-              <div class="resume-pdf-heading">TECHNICAL SKILLS</div>
-              <div class="resume-entry-sub" style="line-height: 1.6;">
-                <div><strong>Programming Languages:</strong> C, C++, Python, JavaScript</div>
-                <div><strong>Web Development:</strong> HTML5, CSS3, JavaScript, Bootstrap 5, Django, Responsive Web Design</div>
-                <div><strong>Core Concepts:</strong> Data Structures and Algorithms (DSA), Object-Oriented Programming (OOPs), Problem Solving</div>
-                <div><strong>Tools & Technologies:</strong> Git, GitHub, VS Code</div>
-                <div><strong>Coding Platforms:</strong> <a href="https://leetcode.com/u/aman_sethiya/" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-leetcode">LeetCode</a>, <a href="https://www.geeksforgeeks.org/profile/amansethil4j4" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-gfg">GeeksforGeeks</a></div>
-              </div>
-
-              <!-- 5. PROJECTS -->
-              <div class="resume-pdf-heading">PROJECTS</div>
+              <!-- 5. KEY PROJECTS -->
+              <div class="resume-pdf-heading">KEY PROJECTS</div>
               
               <div class="mb-2">
-                <div class="resume-item-title">
-                  Margdarshak – Career & Academic Guidance Platform 
+                <div class="mb-1" style="font-size: 0.86rem;">
+                  <strong style="color: #000000;">MargDarshak — Intelligent Urban Graph & Fleet Route Optimizer</strong> 
                   (<a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-github">GitHub</a>) 
-                  (<a href="https://marg-darshk.vercel.app/" target="_blank" rel="noopener noreferrer" class="resume-paper-link">Live</a>)
+                  (<a href="https://marg-darshk.vercel.app/" target="_blank" rel="noopener noreferrer" class="resume-paper-link">Live Demo</a>)
+                </div>
+                <div class="resume-tech-line">
+                  Tech Stack: C++ / TypeScript, React, Leaflet, Data Structures & Graph Algorithms
                 </div>
                 <ul class="resume-pdf-list">
-                  <li><strong>Technologies:</strong> Modern Frontend, Web Development, Vercel Deployment, Interactive Roadmaps.</li>
-                  <li>Developed a live production career guidance portal empowering students with structured career roadmaps and mentorship resources.</li>
-                  <li>Designed a clean, modern responsive interface with intuitive navigation cards and fast client-side performance.</li>
-                  <li>Hosted and deployed the web application live at <a href="https://marg-darshk.vercel.app/" target="_blank" rel="noopener noreferrer" class="resume-paper-link">https://marg-darshk.vercel.app/</a>.</li>
+                  <li>Engineered an in-memory graph routing engine modeling Jaipur’s intra-city transit network across 14 strategic nodes and 44 bidirectional road corridors.</li>
+                  <li>Implemented Dijkstra’s Shortest Path Algorithm for real-time optimal transit route calculation across networks.</li>
+                  <li>Designed a Multi-Stop Traveling Salesperson Problem (TSP) solver for last-mile delivery loops, reducing backtracking and cutting trip fuel consumption by up to 35%.</li>
+                  <li>Integrated a real-time Disruption & Roadblock Simulator to dynamically recalculate detours and alternative bypass corridors (Fastest, Shortest, Eco-Green).</li>
                 </ul>
               </div>
 
               <div class="mb-2">
-                <div class="resume-item-title">
-                  Gym & Fitness Management Website 
-                  (<a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-github">GitHub</a>) 
-                  (<a href="#projects" data-bs-dismiss="modal" class="resume-paper-link">Live Demo</a>)
+                <div class="mb-1" style="font-size: 0.86rem;">
+                  <strong style="color: #000000;">Gym & Fitness Management Website</strong>
+                </div>
+                <div class="resume-tech-line">
+                  Tech Stack: HTML5, CSS3, JavaScript, Bootstrap 5, Django
                 </div>
                 <ul class="resume-pdf-list">
-                  <li><strong>Technologies:</strong> HTML5, CSS3, Bootstrap 5, JavaScript, Django.</li>
                   <li>Built a comprehensive fitness club web platform featuring categorized gym workout packages and tiered membership options.</li>
                   <li>Designed dynamic trainer schedules, class timetables, and an integrated member inquiry registration interface.</li>
                   <li>Implemented fully responsive UI layouts optimized for mobile, tablet, and high-resolution desktop viewports.</li>
                 </ul>
               </div>
 
-              <!-- 6. ACHIEVEMENTS / CODING PROFILES -->
-              <div class="resume-pdf-heading">ACHIEVEMENTS / CODING PROFILES</div>
+              <!-- 6. ACHIEVEMENTS & CERTIFICATIONS (Concise 2 key points) -->
+              <div class="resume-pdf-heading">ACHIEVEMENTS & CERTIFICATIONS</div>
               <ul class="resume-pdf-list">
-                <li>Solved multiple Data Structures and Algorithms (DSA) problems on LeetCode, strengthening problem solving and algorithmic thinking skills. | (<a href="https://leetcode.com/u/aman_sethiya/" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-leetcode">LINK</a>)</li>
-                <li>Active problem solver on GeeksforGeeks practicing C++ STL, OOPs, and core DSA concepts. | (<a href="https://www.geeksforgeeks.org/profile/amansethil4j4" target="_blank" rel="noopener noreferrer" class="resume-paper-link link-gfg">LINK</a>)</li>
-                <li>Completed verified industrial internship in DSA with C++ at EUONUS IT Private Limited (CIN: U62090RJ2023PTC091800). | (<a href="#internships" data-bs-dismiss="modal" class="resume-paper-link">Certificate</a>)</li>
-                <li>Completed certified summer training in Web Application Development at VGT Software Pvt. Ltd., Kota.</li>
-                <li>Developed and deployed live web projects including Margdarshak on Vercel and Gym & Fitness Management platform. | (<a href="https://marg-darshk.vercel.app/" target="_blank" rel="noopener noreferrer" class="resume-paper-link">LINK</a>)</li>
-                <li>Practiced C++ and JavaScript through mini projects, enhancing programming proficiency and logical thinking.</li>
+                <li>Solved 250+ Data Structures and Algorithms (DSA) problems across LeetCode & GeeksforGeeks, strengthening algorithmic thinking and time complexity optimization.</li>
+                <li>Active problem solver on GeeksforGeeks practicing C++ STL, OOPs design principles, and graph optimization algorithms.</li>
               </ul>
 
             </div>
@@ -1146,8 +1226,11 @@
             </span>
             <div class="d-flex align-items-center gap-2">
               <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-cyan-glow btn-sm rounded-pill px-3" onclick="window.print()">
-                <i class="bi bi-printer me-1"></i> Print / Download
+              <button type="button" class="btn btn-outline-light btn-sm rounded-pill px-3" onclick="window.print()" title="Print layout">
+                <i class="bi bi-printer me-1"></i> Print
+              </button>
+              <button type="button" class="btn btn-cyan-glow btn-sm rounded-pill px-4" onclick="downloadResumePDF()" title="Download Official Resume PDF">
+                <i class="bi bi-file-earmark-arrow-down-fill me-1"></i> Download PDF
               </button>
             </div>
           </div>
@@ -1241,6 +1324,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <!-- Custom Portfolio JavaScript -->
-    <script src="/src/script.js"></script>
+    <script type="module" src="/src/script.js"></script>
   </body>
 </html>

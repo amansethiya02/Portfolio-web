@@ -4,7 +4,10 @@
  * Pure JavaScript for dynamic features, copy helpers, modal handlers, typewriter effect, and link management
  */
 
-document.addEventListener('DOMContentLoaded', () => {
+import gymImg from './assets/images/project_gym_website_1790966250439.jpg';
+import margdarshakImg from './assets/images/project_margdarshak_mockup_1790978396784.jpg';
+
+function initPortfolio() {
   // 1. Navbar Scroll Effect
   const navbar = document.querySelector('.navbar-custom');
   window.addEventListener('scroll', () => {
@@ -72,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const links = {
         github: githubVal || 'https://github.com/',
-        linkedin: linkedinVal || 'https://www.linkedin.com/in/aman-sethiya02',
+        linkedin: linkedinVal || 'https://www.linkedin.com/in/aman-sethiya02/?isSelfProfile=true',
         leetcode: leetcodeVal || 'https://leetcode.com/u/aman_sethiya/',
         gfg: gfgVal || 'https://www.geeksforgeeks.org/profile/amansethil4j4',
         resume: resumeVal || '#'
@@ -93,7 +96,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 8. Initialize Project Modals
   setupProjectModals();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initPortfolio);
+} else {
+  initPortfolio();
+}
 
 // Typewriter Animation Implementation
 function initTypewriterEffect() {
@@ -158,21 +167,46 @@ function initPhotoPersistence() {
     console.error('Could not load custom photo from localStorage', e);
   }
 
-  // File input change handler to let user pick their exact img.png
+  // File input change handler to let user pick their exact original photo
   if (fileInput && photoImg) {
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
 
       const reader = new FileReader();
-      reader.onload = function(event) {
+      reader.onload = async function(event) {
         const dataUrl = event.target.result;
         photoImg.src = dataUrl;
+        
         try {
           localStorage.setItem('aman_custom_photo', dataUrl);
-          showToast('Your exact original photo has been loaded and saved!', 'success');
         } catch (err) {
-          showToast('Photo loaded successfully!', 'success');
+          console.warn('LocalStorage limit exceeded for large image:', err);
+        }
+
+        showToast('Saving your photo permanently to website files...', 'info');
+
+        try {
+          const resp = await fetch('/api/upload-hero-photo', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              imageBase64: dataUrl,
+              filename: file.name
+            })
+          });
+
+          const resData = await resp.json();
+          if (resData.success) {
+            showToast('Photo permanently saved in website! (Aapka photo permanently save ho gaya hai)', 'success');
+          } else {
+            showToast('Photo updated on website preview!', 'success');
+          }
+        } catch (err) {
+          console.error('Error saving photo via API:', err);
+          showToast('Photo loaded & cached in browser!', 'success');
         }
       };
       reader.readAsDataURL(file);
@@ -253,7 +287,7 @@ function showToast(message, type = 'info') {
 function loadCustomLinks() {
   const defaultLinks = {
     github: 'https://github.com/',
-    linkedin: 'https://www.linkedin.com/in/aman-sethiya02',
+    linkedin: 'https://www.linkedin.com/in/aman-sethiya02/?isSelfProfile=true',
     leetcode: 'https://leetcode.com/u/aman_sethiya/',
     gfg: 'https://www.geeksforgeeks.org/profile/amansethil4j4',
     resume: '#'
@@ -304,12 +338,75 @@ function applyLinks(links) {
   });
 }
 
+// Resume PDF Direct Download Handler (ATS 1-Page Format)
+window.downloadResumePDF = function() {
+  const resumeSheet = document.querySelector('.resume-paper-sheet');
+  if (!resumeSheet) {
+    window.print();
+    return;
+  }
+
+  showToast('Generating official 1-page Aman Sethiya Resume PDF...', 'info');
+
+  if (typeof window.html2pdf === 'function') {
+    const cloned = resumeSheet.cloneNode(true);
+    cloned.style.boxShadow = 'none';
+    cloned.style.borderRadius = '0';
+    cloned.style.width = '690px';
+    cloned.style.maxWidth = '690px';
+    cloned.style.margin = '0 auto';
+    cloned.style.padding = '16px 20px';
+    cloned.style.backgroundColor = '#ffffff';
+    cloned.style.color = '#000000';
+
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'fixed';
+    wrapper.style.left = '-9999px';
+    wrapper.style.top = '0';
+    wrapper.style.width = '690px';
+    wrapper.style.background = '#ffffff';
+    wrapper.appendChild(cloned);
+    document.body.appendChild(wrapper);
+
+    const opt = {
+      margin:       [6, 8, 6, 8],
+      filename:     'Aman_Sethiya_Resume.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true, letterRendering: true, logging: false, width: 690 },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    window.html2pdf().set(opt).from(cloned).save().then(() => {
+      if (document.body.contains(wrapper)) {
+        document.body.removeChild(wrapper);
+      }
+      showToast('Aman_Sethiya_Resume.pdf downloaded successfully! (Single-Page ATS Format)', 'success');
+    }).catch(err => {
+      console.error('html2pdf generation error:', err);
+      if (document.body.contains(wrapper)) {
+        document.body.removeChild(wrapper);
+      }
+      showToast('Opening print dialog for PDF save...', 'info');
+      window.print();
+    });
+  } else {
+    const resumeModalEl = document.getElementById('resumeModal');
+    if (resumeModalEl && window.bootstrap) {
+      const modal = bootstrap.Modal.getInstance(resumeModalEl) || new bootstrap.Modal(resumeModalEl);
+      modal.show();
+    }
+    setTimeout(() => {
+      window.print();
+    }, 400);
+  }
+};
+
 const projectsData = {
   gym: {
     title: 'Gym & Fitness Management Website',
     tagline: 'Comprehensive fitness club web platform with packages, schedules & inquiry management',
     tech: ['HTML5', 'CSS3', 'Bootstrap 5', 'JavaScript', 'Django'],
-    image: '/src/assets/images/project_gym_website_1790966250439.jpg',
+    image: gymImg,
     features: [
       'Developed as a featured project during industrial web development training at VGT Software',
       'Interactive fitness packages listing with tiered membership options',
@@ -317,20 +414,19 @@ const projectsData = {
       'Integrated member inquiry and contact registration backend',
       'Fully responsive UI optimized for mobile, tablet, and high-res desktops'
     ],
-    github: 'https://github.com/',
-    demoUrl: '#'
+    github: '',
+    demoUrl: ''
   },
   margdarshak: {
-    title: 'Margdarshak - Career & Academic Guidance Platform',
-    tagline: 'Intelligent guidance portal empowering students with career roadmaps & mentorship',
-    tech: ['Web Development', 'Modern Frontend', 'Vercel Deployment', 'Interactive Roadmaps'],
-    image: '/src/assets/images/project_margdarshak_mockup_1790978396784.jpg',
+    title: 'MargDarshak — Intelligent Urban Graph & Fleet Route Optimizer',
+    tagline: 'High-performance transit routing & last-mile fleet optimizer modeling Jaipur intra-city network',
+    tech: ['C++ / TypeScript', 'React', 'Leaflet', 'Data Structures & Graph Algorithms', 'Dijkstra', 'TSP Solver'],
+    image: margdarshakImg,
     features: [
-      'Live deployed production web application: https://marg-darshk.vercel.app/',
-      'Personalized career roadmap guides for school & college students',
-      'Stream and specialization exploration with curated skill milestones',
-      'Clean modern responsive interface with intuitive navigation cards',
-      'Fast client-side routing with instant resource accessibility'
+      'Engineered an in-memory graph routing engine modeling Jaipur’s intra-city transit network across 14 strategic nodes and 44 bidirectional road corridors.',
+      'Implemented Dijkstra’s Algorithm for real-time shortest route calculation across transit networks.',
+      'Designed a Multi-Stop Traveling Salesperson Problem (TSP) solver for last-mile delivery loops, reducing backtracking and cutting trip fuel consumption by up to 35%.',
+      'Integrated a real-time Disruption & Roadblock Simulator to dynamically recalculate detours and alternative bypass corridors with multi-objective criteria (Fastest, Shortest, Zero-Toll, Eco-Green).'
     ],
     github: 'https://github.com/',
     demoUrl: 'https://marg-darshk.vercel.app/'
@@ -375,10 +471,12 @@ function setupProjectModals() {
         `).join('');
       }
       if (githubLink) {
-        githubLink.href = data.github;
+        githubLink.href = data.github || '#';
+        githubLink.style.display = data.github ? 'inline-flex' : 'none';
       }
       if (demoLink) {
-        demoLink.href = data.demoUrl;
+        demoLink.href = data.demoUrl || '#';
+        demoLink.style.display = (data.demoUrl && data.demoUrl !== '#') ? 'inline-flex' : 'none';
       }
 
       const modalEl = document.getElementById('projectPreviewModal');
